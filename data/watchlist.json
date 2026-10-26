@@ -1,0 +1,686 @@
+{
+  "version": 1,
+  "description": "Initial watchlist for VRAM$Tracker. sku_id values are stable keys; fill prices into price_history.csv when observed.",
+  "items": [
+    {
+      "sku_id": "nvidia:rtx-5090",
+      "category": "local_gpu",
+      "name": "GeForce RTX 5090 street",
+      "memory_gb": 32,
+      "unit_metric": "usd_per_gb",
+      "status": "active",
+      "notes": "street grey; MSRP 1999"
+    },
+    {
+      "sku_id": "nvidia:rtx-5080",
+      "category": "local_gpu",
+      "name": "GeForce RTX 5080 street",
+      "memory_gb": 16,
+      "unit_metric": "usd_per_gb",
+      "status": "active",
+      "notes": ""
+    },
+    {
+      "sku_id": "nvidia:rtx-4090",
+      "category": "local_gpu",
+      "name": "GeForce RTX 4090 street EOL",
+      "memory_gb": 24,
+      "unit_metric": "usd_per_gb",
+      "status": "eol",
+      "notes": "EOL discontinued"
+    },
+    {
+      "sku_id": "nvidia:rtx-4080-super",
+      "category": "local_gpu",
+      "name": "GeForce RTX 4080 SUPER street EOL",
+      "memory_gb": 16,
+      "unit_metric": "usd_per_gb",
+      "status": "eol",
+      "notes": "EOL"
+    },
+    {
+      "sku_id": "apple:mac-studio-m5-max-128",
+      "category": "mac",
+      "name": "Mac Studio M5 Max 128GB",
+      "memory_gb": 128,
+      "unit_metric": "usd_per_gb",
+      "status": "active",
+      "notes": "apple.com CTO"
+    },
+    {
+      "sku_id": "apple:mac-studio-m5-ultra-256",
+      "category": "mac",
+      "name": "Mac Studio M5 Ultra 256GB 30/64",
+      "memory_gb": 256,
+      "unit_metric": "usd_per_gb",
+      "status": "active",
+      "notes": "apple.com"
+    },
+    {
+      "sku_id": "openai:gpt-5.6-luna-input",
+      "category": "cloud_token_input",
+      "name": "OpenAI GPT-5.6 Luna (input)",
+      "memory_gb": null,
+      "unit_metric": "usd_per_1m_tokens",
+      "status": "active",
+      "notes": "cheap tier",
+      "speculative": true
+    },
+    {
+      "sku_id": "openai:gpt-5.6-luna-output",
+      "category": "cloud_token_output",
+      "name": "OpenAI GPT-5.6 Luna (output)",
+      "memory_gb": null,
+      "unit_metric": "usd_per_1m_tokens",
+      "status": "active",
+      "notes": "cheap tier",
+      "speculative": true
+    },
+    {
+      "sku_id": "openai:gpt-5.6-terra-input",
+      "category": "cloud_token_input",
+      "name": "OpenAI GPT-5.6 Terra (input)",
+      "memory_gb": null,
+      "unit_metric": "usd_per_1m_tokens",
+      "status": "active",
+      "notes": "mid tier",
+      "speculative": true
+    },
+    {
+      "sku_id": "openai:gpt-5.6-terra-output",
+      "category": "cloud_token_output",
+      "name": "OpenAI GPT-5.6 Terra (output)",
+      "memory_gb": null,
+      "unit_metric": "usd_per_1m_tokens",
+      "status": "active",
+      "notes": "mid tier",
+      "speculative": true
+    },
+    {
+      "sku_id": "openai:gpt-5.6-sol-input",
+      "category": "cloud_token_input",
+      "name": "OpenAI GPT-5.6 Sol (input)",
+      "memory_gb": null,
+      "unit_metric": "usd_per_1m_tokens",
+      "status": "active",
+      "notes": "frontier / flagship",
+      "speculative": true
+    },
+    {
+      "sku_id": "openai:gpt-5.6-sol-output",
+      "category": "cloud_token_output",
+      "name": "OpenAI GPT-5.6 Sol (output)",
+      "memory_gb": null,
+      "unit_metric": "usd_per_1m_tokens",
+      "status": "active",
+      "notes": "frontier / flagship",
+      "speculative": true
+    },
+    {
+      "sku_id": "anthropic:haiku-4.5-input",
+      "category": "cloud_token_input",
+      "name": "Anthropic Claude Haiku 4.5 (input)",
+      "memory_gb": null,
+      "unit_metric": "usd_per_1m_tokens",
+      "status": "active",
+      "notes": "cheap tier"
+    },
+    {
+      "sku_id": "anthropic:haiku-4.5-output",
+      "category": "cloud_token_output",
+      "name": "Anthropic Claude Haiku 4.5 (output)",
+      "memory_gb": null,
+      "unit_metric": "usd_per_1m_tokens",
+      "status": "active",
+      "notes": "cheap tier"
+    },
+    {
+      "sku_id": "anthropic:sonnet-5-input",
+      "category": "cloud_token_input",
+      "name": "Anthropic Claude Sonnet 5 (input)",
+      "memory_gb": null,
+      "unit_metric": "usd_per_1m_tokens",
+      "status": "active",
+      "notes": "mid tier",
+      "speculative": true
+    },
+    {
+      "sku_id": "anthropic:sonnet-5-output",
+      "category": "cloud_token_output",
+      "name": "Anthropic Claude Sonnet 5 (output)",
+      "memory_gb": null,
+      "unit_metric": "usd_per_1m_tokens",
+      "status": "active",
+      "notes": "mid tier",
+      "speculative": true
+    },
+    {
+      "sku_id": "anthropic:opus-5-input",
+      "category": "cloud_token_input",
+      "name": "Anthropic Claude Opus 5 (input)",
+      "memory_gb": null,
+      "unit_metric": "usd_per_1m_tokens",
+      "status": "active",
+      "notes": "frontier / flagship",
+      "speculative": true
+    },
+    {
+      "sku_id": "anthropic:opus-5-output",
+      "category": "cloud_token_output",
+      "name": "Anthropic Claude Opus 5 (output)",
+      "memory_gb": null,
+      "unit_metric": "usd_per_1m_tokens",
+      "status": "active",
+      "notes": "frontier / flagship",
+      "speculative": true
+    },
+    {
+      "sku_id": "google:gemini-3.1-flash-lite-input",
+      "category": "cloud_token_input",
+      "name": "Google Gemini 3.1 Flash-Lite (input)",
+      "memory_gb": null,
+      "unit_metric": "usd_per_1m_tokens",
+      "status": "active",
+      "notes": "cheap tier",
+      "speculative": true
+    },
+    {
+      "sku_id": "google:gemini-3.1-flash-lite-output",
+      "category": "cloud_token_output",
+      "name": "Google Gemini 3.1 Flash-Lite (output)",
+      "memory_gb": null,
+      "unit_metric": "usd_per_1m_tokens",
+      "status": "active",
+      "notes": "cheap tier",
+      "speculative": true
+    },
+    {
+      "sku_id": "google:gemini-3.8-flash-input",
+      "category": "cloud_token_input",
+      "name": "Google Gemini 3.8 Flash (input)",
+      "memory_gb": null,
+      "unit_metric": "usd_per_1m_tokens",
+      "status": "active",
+      "notes": "mid tier; promo through 2026-12-31",
+      "speculative": true
+    },
+    {
+      "sku_id": "google:gemini-3.8-flash-output",
+      "category": "cloud_token_output",
+      "name": "Google Gemini 3.8 Flash (output)",
+      "memory_gb": null,
+      "unit_metric": "usd_per_1m_tokens",
+      "status": "active",
+      "notes": "mid tier; promo through 2026-12-31",
+      "speculative": true
+    },
+    {
+      "sku_id": "google:gemini-3.1-pro-input",
+      "category": "cloud_token_input",
+      "name": "Google Gemini 3.1 Pro (input)",
+      "memory_gb": null,
+      "unit_metric": "usd_per_1m_tokens",
+      "status": "active",
+      "notes": "frontier; ≤200k context rate",
+      "speculative": true
+    },
+    {
+      "sku_id": "google:gemini-3.1-pro-output",
+      "category": "cloud_token_output",
+      "name": "Google Gemini 3.1 Pro (output)",
+      "memory_gb": null,
+      "unit_metric": "usd_per_1m_tokens",
+      "status": "active",
+      "notes": "frontier; ≤200k context rate",
+      "speculative": true
+    },
+    {
+      "sku_id": "openai:gpt-6-astra-input",
+      "category": "cloud_token_input",
+      "name": "OpenAI GPT-6 Astra (input)",
+      "memory_gb": null,
+      "unit_metric": "usd_per_1m_tokens",
+      "status": "active",
+      "notes": "ultra / frontier ultra",
+      "speculative": true
+    },
+    {
+      "sku_id": "openai:gpt-6-astra-output",
+      "category": "cloud_token_output",
+      "name": "OpenAI GPT-6 Astra (output)",
+      "memory_gb": null,
+      "unit_metric": "usd_per_1m_tokens",
+      "status": "active",
+      "notes": "ultra / frontier ultra",
+      "speculative": true
+    },
+    {
+      "sku_id": "anthropic:fable-5-input",
+      "category": "cloud_token_input",
+      "name": "Anthropic Claude Fable 5 (input)",
+      "memory_gb": null,
+      "unit_metric": "usd_per_1m_tokens",
+      "status": "active",
+      "notes": "ultra tier (Fable 5 / 5.1)",
+      "speculative": true
+    },
+    {
+      "sku_id": "anthropic:fable-5-output",
+      "category": "cloud_token_output",
+      "name": "Anthropic Claude Fable 5 (output)",
+      "memory_gb": null,
+      "unit_metric": "usd_per_1m_tokens",
+      "status": "active",
+      "notes": "ultra tier (Fable 5 / 5.1)",
+      "speculative": true
+    },
+    {
+      "sku_id": "deepseek:flash-input",
+      "category": "cloud_token_input",
+      "name": "DeepSeek flash (input)",
+      "memory_gb": null,
+      "unit_metric": "usd_per_1m_tokens",
+      "status": "active",
+      "notes": "peak rate (off-peak half); cheap tier"
+    },
+    {
+      "sku_id": "deepseek:flash-output",
+      "category": "cloud_token_output",
+      "name": "DeepSeek flash (output)",
+      "memory_gb": null,
+      "unit_metric": "usd_per_1m_tokens",
+      "status": "active",
+      "notes": "peak rate (off-peak half); cheap tier"
+    },
+    {
+      "sku_id": "deepseek:v4-pro-input",
+      "category": "cloud_token_input",
+      "name": "DeepSeek V4 Pro (input)",
+      "memory_gb": null,
+      "unit_metric": "usd_per_1m_tokens",
+      "status": "active",
+      "notes": "peak rate (off-peak half); frontier"
+    },
+    {
+      "sku_id": "deepseek:v4-pro-output",
+      "category": "cloud_token_output",
+      "name": "DeepSeek V4 Pro (output)",
+      "memory_gb": null,
+      "unit_metric": "usd_per_1m_tokens",
+      "status": "active",
+      "notes": "peak rate (off-peak half); frontier"
+    },
+    {
+      "sku_id": "xai:grok-4.3-input",
+      "category": "cloud_token_input",
+      "name": "xAI Grok 4.3 (input)",
+      "memory_gb": null,
+      "unit_metric": "usd_per_1m_tokens",
+      "status": "active",
+      "notes": "mid; <200k prompt",
+      "speculative": true
+    },
+    {
+      "sku_id": "xai:grok-4.3-output",
+      "category": "cloud_token_output",
+      "name": "xAI Grok 4.3 (output)",
+      "memory_gb": null,
+      "unit_metric": "usd_per_1m_tokens",
+      "status": "active",
+      "notes": "mid; <200k prompt",
+      "speculative": true
+    },
+    {
+      "sku_id": "xai:grok-4.6-input",
+      "category": "cloud_token_input",
+      "name": "xAI Grok 4.6 (input)",
+      "memory_gb": null,
+      "unit_metric": "usd_per_1m_tokens",
+      "status": "active",
+      "notes": "frontier; <200k prompt",
+      "speculative": true
+    },
+    {
+      "sku_id": "xai:grok-4.6-output",
+      "category": "cloud_token_output",
+      "name": "xAI Grok 4.6 (output)",
+      "memory_gb": null,
+      "unit_metric": "usd_per_1m_tokens",
+      "status": "active",
+      "notes": "frontier; <200k prompt",
+      "speculative": true
+    },
+    {
+      "sku_id": "groq:gpt-oss-120b-input",
+      "category": "cloud_token_input",
+      "name": "Groq gpt-oss-120b (input)",
+      "memory_gb": null,
+      "unit_metric": "usd_per_1m_tokens",
+      "status": "active",
+      "notes": "mid OSS via Groq"
+    },
+    {
+      "sku_id": "groq:gpt-oss-120b-output",
+      "category": "cloud_token_output",
+      "name": "Groq gpt-oss-120b (output)",
+      "memory_gb": null,
+      "unit_metric": "usd_per_1m_tokens",
+      "status": "active",
+      "notes": "mid OSS via Groq"
+    },
+    {
+      "sku_id": "runpod:h100-pcie",
+      "category": "cloud_gpu_rent",
+      "name": "RunPod H100 PCIe community",
+      "memory_gb": 80,
+      "unit_metric": "usd_per_hour",
+      "status": "active",
+      "notes": "community cloud"
+    },
+    {
+      "sku_id": "phoenix_residential_kwh",
+      "category": "power_kwh",
+      "name": "Phoenix residential electricity (kWh)",
+      "memory_gb": null,
+      "unit_metric": "usd_per_kwh",
+      "status": "active",
+      "notes": ""
+    },
+    {
+      "sku_id": "anthropic:opus-5.5-input",
+      "category": "cloud_token_input",
+      "name": "Claude Opus 5.5 (input)",
+      "memory_gb": null,
+      "unit_metric": "usd_per_1m_tokens",
+      "status": "discovered",
+      "notes": "auto-discovered from openrouter.ai/api/v1/models (public); or_id=anthropic/claude-opus-5.5",
+      "speculative": true
+    },
+    {
+      "sku_id": "anthropic:opus-5.5-output",
+      "category": "cloud_token_output",
+      "name": "Claude Opus 5.5 (output)",
+      "memory_gb": null,
+      "unit_metric": "usd_per_1m_tokens",
+      "status": "discovered",
+      "notes": "auto-discovered from openrouter.ai/api/v1/models (public); or_id=anthropic/claude-opus-5.5",
+      "speculative": true
+    },
+    {
+      "sku_id": "openai:gpt-6-luna-input",
+      "category": "cloud_token_input",
+      "name": "GPT-6 Luna (input)",
+      "memory_gb": null,
+      "unit_metric": "usd_per_1m_tokens",
+      "status": "discovered",
+      "notes": "auto-discovered from openrouter.ai/api/v1/models (public); or_id=openai/gpt-6-luna",
+      "speculative": true
+    },
+    {
+      "sku_id": "openai:gpt-6-luna-output",
+      "category": "cloud_token_output",
+      "name": "GPT-6 Luna (output)",
+      "memory_gb": null,
+      "unit_metric": "usd_per_1m_tokens",
+      "status": "discovered",
+      "notes": "auto-discovered from openrouter.ai/api/v1/models (public); or_id=openai/gpt-6-luna",
+      "speculative": true
+    },
+    {
+      "sku_id": "openai:gpt-6-sol-input",
+      "category": "cloud_token_input",
+      "name": "GPT-6 Sol (input)",
+      "memory_gb": null,
+      "unit_metric": "usd_per_1m_tokens",
+      "status": "discovered",
+      "notes": "auto-discovered from openrouter.ai/api/v1/models (public); or_id=openai/gpt-6-sol",
+      "speculative": true
+    },
+    {
+      "sku_id": "openai:gpt-6-sol-output",
+      "category": "cloud_token_output",
+      "name": "GPT-6 Sol (output)",
+      "memory_gb": null,
+      "unit_metric": "usd_per_1m_tokens",
+      "status": "discovered",
+      "notes": "auto-discovered from openrouter.ai/api/v1/models (public); or_id=openai/gpt-6-sol",
+      "speculative": true
+    },
+    {
+      "sku_id": "xai:grok-4.7-input",
+      "category": "cloud_token_input",
+      "name": "Grok 4.7 (input)",
+      "memory_gb": null,
+      "unit_metric": "usd_per_1m_tokens",
+      "status": "discovered",
+      "notes": "auto-discovered from openrouter.ai/api/v1/models (public); or_id=x-ai/grok-4.7",
+      "speculative": true
+    },
+    {
+      "sku_id": "xai:grok-4.7-output",
+      "category": "cloud_token_output",
+      "name": "Grok 4.7 (output)",
+      "memory_gb": null,
+      "unit_metric": "usd_per_1m_tokens",
+      "status": "discovered",
+      "notes": "auto-discovered from openrouter.ai/api/v1/models (public); or_id=x-ai/grok-4.7",
+      "speculative": true
+    },
+    {
+      "sku_id": "nvidia:rtx-5090-bestbuy",
+      "category": "local_gpu",
+      "name": "GeForce RTX 5090 (Best Buy direct)",
+      "memory_gb": 32,
+      "unit_metric": "usd_per_gb",
+      "status": "active",
+      "notes": "lowest Best Buy direct list price, browser scrape every 6h"
+    },
+    {
+      "sku_id": "nvidia:rtx-5090-walmart",
+      "category": "local_gpu",
+      "name": "GeForce RTX 5090 (Walmart direct)",
+      "memory_gb": 32,
+      "unit_metric": "usd_per_gb",
+      "status": "active",
+      "notes": "lowest Walmart direct list price, browser scrape every 6h"
+    },
+    {
+      "sku_id": "nvidia:rtx-5090-bhphoto",
+      "category": "local_gpu",
+      "name": "GeForce RTX 5090 (B&H Photo direct)",
+      "memory_gb": 32,
+      "unit_metric": "usd_per_gb",
+      "status": "active",
+      "notes": "lowest B&H Photo direct list price, browser scrape every 6h"
+    },
+    {
+      "sku_id": "nvidia:rtx-5090-zotac",
+      "category": "local_gpu",
+      "name": "GeForce RTX 5090 (Zotac Store direct)",
+      "memory_gb": 32,
+      "unit_metric": "usd_per_gb",
+      "status": "active",
+      "notes": "lowest Zotac Store direct list price, browser scrape every 6h"
+    },
+    {
+      "sku_id": "nvidia:rtx-5080-bestbuy",
+      "category": "local_gpu",
+      "name": "GeForce RTX 5080 (Best Buy direct)",
+      "memory_gb": 16,
+      "unit_metric": "usd_per_gb",
+      "status": "active",
+      "notes": "lowest Best Buy direct list price, browser scrape every 6h"
+    },
+    {
+      "sku_id": "nvidia:rtx-5080-walmart",
+      "category": "local_gpu",
+      "name": "GeForce RTX 5080 (Walmart direct)",
+      "memory_gb": 16,
+      "unit_metric": "usd_per_gb",
+      "status": "active",
+      "notes": "lowest Walmart direct list price, browser scrape every 6h"
+    },
+    {
+      "sku_id": "nvidia:rtx-5080-bhphoto",
+      "category": "local_gpu",
+      "name": "GeForce RTX 5080 (B&H Photo direct)",
+      "memory_gb": 16,
+      "unit_metric": "usd_per_gb",
+      "status": "active",
+      "notes": "lowest B&H Photo direct list price, browser scrape every 6h"
+    },
+    {
+      "sku_id": "nvidia:rtx-5080-zotac",
+      "category": "local_gpu",
+      "name": "GeForce RTX 5080 (Zotac Store direct)",
+      "memory_gb": 16,
+      "unit_metric": "usd_per_gb",
+      "status": "active",
+      "notes": "lowest Zotac Store direct list price, browser scrape every 6h"
+    },
+    {
+      "sku_id": "nvidia:rtx-4090-bestbuy",
+      "category": "local_gpu",
+      "name": "GeForce RTX 4090 (Best Buy direct)",
+      "memory_gb": 24,
+      "unit_metric": "usd_per_gb",
+      "status": "active",
+      "notes": "lowest Best Buy direct list price, browser scrape every 6h"
+    },
+    {
+      "sku_id": "nvidia:rtx-4090-walmart",
+      "category": "local_gpu",
+      "name": "GeForce RTX 4090 (Walmart direct)",
+      "memory_gb": 24,
+      "unit_metric": "usd_per_gb",
+      "status": "active",
+      "notes": "lowest Walmart direct list price, browser scrape every 6h"
+    },
+    {
+      "sku_id": "nvidia:rtx-4090-bhphoto",
+      "category": "local_gpu",
+      "name": "GeForce RTX 4090 (B&H Photo direct)",
+      "memory_gb": 24,
+      "unit_metric": "usd_per_gb",
+      "status": "active",
+      "notes": "lowest B&H Photo direct list price, browser scrape every 6h"
+    },
+    {
+      "sku_id": "nvidia:rtx-4090-zotac",
+      "category": "local_gpu",
+      "name": "GeForce RTX 4090 (Zotac Store direct)",
+      "memory_gb": 24,
+      "unit_metric": "usd_per_gb",
+      "status": "active",
+      "notes": "lowest Zotac Store direct list price, browser scrape every 6h"
+    },
+    {
+      "sku_id": "nvidia:rtx-4080-super-bestbuy",
+      "category": "local_gpu",
+      "name": "GeForce RTX 4080 SUPER (Best Buy direct)",
+      "memory_gb": 16,
+      "unit_metric": "usd_per_gb",
+      "status": "active",
+      "notes": "lowest Best Buy direct list price, browser scrape every 6h"
+    },
+    {
+      "sku_id": "nvidia:rtx-4080-super-walmart",
+      "category": "local_gpu",
+      "name": "GeForce RTX 4080 SUPER (Walmart direct)",
+      "memory_gb": 16,
+      "unit_metric": "usd_per_gb",
+      "status": "active",
+      "notes": "lowest Walmart direct list price, browser scrape every 6h"
+    },
+    {
+      "sku_id": "nvidia:rtx-4080-super-bhphoto",
+      "category": "local_gpu",
+      "name": "GeForce RTX 4080 SUPER (B&H Photo direct)",
+      "memory_gb": 16,
+      "unit_metric": "usd_per_gb",
+      "status": "active",
+      "notes": "lowest B&H Photo direct list price, browser scrape every 6h"
+    },
+    {
+      "sku_id": "nvidia:rtx-4080-super-zotac",
+      "category": "local_gpu",
+      "name": "GeForce RTX 4080 SUPER (Zotac Store direct)",
+      "memory_gb": 16,
+      "unit_metric": "usd_per_gb",
+      "status": "active",
+      "notes": "lowest Zotac Store direct list price, browser scrape every 6h"
+    },
+    {
+      "sku_id": "nvidia:rtx-5090-newegg",
+      "category": "local_gpu",
+      "name": "GeForce RTX 5090 (Newegg direct)",
+      "memory_gb": 32,
+      "unit_metric": "usd_per_gb",
+      "status": "active",
+      "notes": "lowest Newegg direct list price, browser scrape every 6h"
+    },
+    {
+      "sku_id": "nvidia:rtx-5090-amazon",
+      "category": "local_gpu",
+      "name": "GeForce RTX 5090 (Amazon direct)",
+      "memory_gb": 32,
+      "unit_metric": "usd_per_gb",
+      "status": "active",
+      "notes": "lowest Amazon direct list price, browser scrape every 6h"
+    },
+    {
+      "sku_id": "nvidia:rtx-5080-newegg",
+      "category": "local_gpu",
+      "name": "GeForce RTX 5080 (Newegg direct)",
+      "memory_gb": 16,
+      "unit_metric": "usd_per_gb",
+      "status": "active",
+      "notes": "lowest Newegg direct list price, browser scrape every 6h"
+    },
+    {
+      "sku_id": "nvidia:rtx-5080-amazon",
+      "category": "local_gpu",
+      "name": "GeForce RTX 5080 (Amazon direct)",
+      "memory_gb": 16,
+      "unit_metric": "usd_per_gb",
+      "status": "active",
+      "notes": "lowest Amazon direct list price, browser scrape every 6h"
+    },
+    {
+      "sku_id": "nvidia:rtx-4090-newegg",
+      "category": "local_gpu",
+      "name": "GeForce RTX 4090 (Newegg direct)",
+      "memory_gb": 24,
+      "unit_metric": "usd_per_gb",
+      "status": "active",
+      "notes": "lowest Newegg direct list price, browser scrape every 6h"
+    },
+    {
+      "sku_id": "nvidia:rtx-4090-amazon",
+      "category": "local_gpu",
+      "name": "GeForce RTX 4090 (Amazon direct)",
+      "memory_gb": 24,
+      "unit_metric": "usd_per_gb",
+      "status": "active",
+      "notes": "lowest Amazon direct list price, browser scrape every 6h"
+    },
+    {
+      "sku_id": "nvidia:rtx-4080-super-newegg",
+      "category": "local_gpu",
+      "name": "GeForce RTX 4080 SUPER (Newegg direct)",
+      "memory_gb": 16,
+      "unit_metric": "usd_per_gb",
+      "status": "active",
+      "notes": "lowest Newegg direct list price, browser scrape every 6h"
+    },
+    {
+      "sku_id": "nvidia:rtx-4080-super-amazon",
+      "category": "local_gpu",
+      "name": "GeForce RTX 4080 SUPER (Amazon direct)",
+      "memory_gb": 16,
+      "unit_metric": "usd_per_gb",
+      "status": "active",
+      "notes": "lowest Amazon direct list price, browser scrape every 6h"
+    }
+  ]
+}

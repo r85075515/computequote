@@ -1,0 +1,154 @@
+{
+  "version": 1,
+  "description": "Whitelist of cloud token pricing sources for scripts/scrape_cloud_pricing.py. Prefer curl+regex/JSON; OpenRouter public API is a secondary verified market list when official pages are JS-empty.",
+  "aliases": {
+    "openai/gpt-5.6-luna": "openai:gpt-5.6-luna",
+    "openai/gpt-5.6-terra": "openai:gpt-5.6-terra",
+    "openai/gpt-5.6-sol": "openai:gpt-5.6-sol",
+    "openai/gpt-6-astra": "openai:gpt-6-astra",
+    "anthropic/claude-haiku-4.5": "anthropic:haiku-4.5",
+    "anthropic/claude-sonnet-5": "anthropic:sonnet-5",
+    "anthropic/claude-opus-5": "anthropic:opus-5",
+    "anthropic/claude-fable-5": "anthropic:fable-5",
+    "google/gemini-3.1-flash-lite": "google:gemini-3.1-flash-lite",
+    "google/gemini-3.8-flash": "google:gemini-3.8-flash",
+    "google/gemini-3.1-pro-preview": "google:gemini-3.1-pro",
+    "deepseek/deepseek-v4.1-flash": "deepseek:flash",
+    "deepseek/deepseek-v4-pro-0813": "deepseek:v4-pro",
+    "x-ai/grok-4.3": "xai:grok-4.3",
+    "x-ai/grok-4.6": "xai:grok-4.6",
+    "openai/gpt-oss-120b": "groq:gpt-oss-120b"
+  },
+  "discover": {
+    "enabled": true,
+    "max_new_models": 8,
+    "include_openrouter_ids": [
+      "openai/gpt-6-luna",
+      "openai/gpt-6-sol",
+      "anthropic/claude-opus-5.5",
+      "x-ai/grok-4.7"
+    ],
+    "exclude_substrings": [
+      ":batch",
+      "-image",
+      "codex",
+      "vision",
+      "safeguard"
+    ]
+  },
+  "sources": [
+    {
+      "provider": "deepseek",
+      "source_id": "deepseek_docs_pricing",
+      "url": "https://api-docs.deepseek.com/quick_start/pricing",
+      "kind": "html",
+      "notes": "Official DeepSeek docs; peak cache-miss / output rates (USD per 1M).",
+      "matchers": [
+        {
+          "sku_id": "deepseek:flash-input",
+          "pattern": "1M INPUT TOKENS[^$]*CACHE MISS[\\s\\S]*?(?<!OFF-)PEAK[^$]*\\$([0-9.]+)",
+          "io": "input",
+          "unit": "usd_per_1m"
+        },
+        {
+          "sku_id": "deepseek:v4-pro-input",
+          "pattern": "1M INPUT TOKENS[^$]*CACHE MISS[\\s\\S]*?(?<!OFF-)PEAK[^$]*\\$[0-9.]+[^$]*\\$([0-9.]+)",
+          "io": "input",
+          "unit": "usd_per_1m"
+        },
+        {
+          "sku_id": "deepseek:flash-output",
+          "pattern": "1M OUTPUT TOKENS[\\s\\S]*?(?<!OFF-)PEAK[^$]*\\$([0-9.]+)",
+          "io": "output",
+          "unit": "usd_per_1m"
+        },
+        {
+          "sku_id": "deepseek:v4-pro-output",
+          "pattern": "1M OUTPUT TOKENS[\\s\\S]*?(?<!OFF-)PEAK[^$]*\\$[0-9.]+[^$]*\\$([0-9.]+)",
+          "io": "output",
+          "unit": "usd_per_1m"
+        }
+      ]
+    },
+    {
+      "provider": "openai",
+      "source_id": "openai_api_pricing",
+      "url": "https://openai.com/api/pricing/",
+      "kind": "html",
+      "notes": "Official OpenAI pricing page (often JS-rendered / empty of numbers).",
+      "matchers": []
+    },
+    {
+      "provider": "anthropic",
+      "source_id": "anthropic_pricing",
+      "url": "https://www.anthropic.com/pricing",
+      "kind": "html",
+      "notes": "Official Anthropic pricing (often JS-empty).",
+      "matchers": []
+    },
+    {
+      "provider": "google",
+      "source_id": "google_ai_pricing",
+      "url": "https://ai.google.dev/pricing",
+      "kind": "html",
+      "notes": "Official Google AI pricing (often JS-empty).",
+      "matchers": []
+    },
+    {
+      "provider": "xai",
+      "source_id": "xai_api",
+      "url": "https://x.ai/api",
+      "kind": "html",
+      "notes": "xAI API page (often JS-empty).",
+      "matchers": []
+    },
+    {
+      "provider": "openrouter",
+      "source_id": "openrouter_public_models",
+      "url": "https://openrouter.ai/api/v1/models",
+      "kind": "json",
+      "notes": "Secondary verified market/list source when official pages lack parseable numbers. Source label: openrouter.ai/api/v1/models (public). Pricing fields are USD per token → convert ×1e6 to usd_per_1m.",
+      "openrouter": {
+        "prompt_field": "pricing.prompt",
+        "completion_field": "pricing.completion",
+        "per_token_to_1m": true
+      },
+      "matchers": []
+    }
+  ],
+  "speculative_sku_ids": [
+    "anthropic:fable-5-input",
+    "anthropic:fable-5-output",
+    "anthropic:opus-5-input",
+    "anthropic:opus-5-output",
+    "anthropic:opus-5.5-input",
+    "anthropic:opus-5.5-output",
+    "anthropic:sonnet-5-input",
+    "anthropic:sonnet-5-output",
+    "google:gemini-3.1-flash-lite-input",
+    "google:gemini-3.1-flash-lite-output",
+    "google:gemini-3.1-pro-input",
+    "google:gemini-3.1-pro-output",
+    "google:gemini-3.8-flash-input",
+    "google:gemini-3.8-flash-output",
+    "openai:gpt-5.6-luna-input",
+    "openai:gpt-5.6-luna-output",
+    "openai:gpt-5.6-sol-input",
+    "openai:gpt-5.6-sol-output",
+    "openai:gpt-5.6-terra-input",
+    "openai:gpt-5.6-terra-output",
+    "openai:gpt-6-astra-input",
+    "openai:gpt-6-astra-output",
+    "openai:gpt-6-luna-input",
+    "openai:gpt-6-luna-output",
+    "openai:gpt-6-sol-input",
+    "openai:gpt-6-sol-output",
+    "xai:grok-4.3-input",
+    "xai:grok-4.3-output",
+    "xai:grok-4.6-input",
+    "xai:grok-4.6-output",
+    "xai:grok-4.7-input",
+    "xai:grok-4.7-output"
+  ],
+  "speculative_notes": "Hypothetical / unofficial model names (GPT-5.6 Sol/Luna/Terra, GPT-6 *, Claude Fable/Sonnet/Opus 5*, Gemini 3.*, Grok 4.*). DeepSeek official HTML rates are not speculative."
+}
