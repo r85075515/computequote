@@ -1,43 +1,43 @@
 {
-  "as_of": "2026-10-01",
+  "as_of": "2026-10-28",
   "plain_zh": "Mac 歷史約一個月｜GPU Keepa 近似長曲線｜雲端自日更起",
   "categories": {
     "cloud_gpu_rent": {
       "min_date": "2026-09-15",
-      "max_date": "2026-10-01",
-      "unique_dates": 14,
+      "max_date": "2026-10-28",
+      "unique_dates": 21,
       "label_zh": "雲 GPU 租賃短歷史"
     },
     "cloud_token_input": {
       "min_date": "2025-09-15",
-      "max_date": "2026-10-01",
-      "unique_dates": 38,
+      "max_date": "2026-10-28",
+      "unique_dates": 45,
       "label_zh": "雲端自日更起"
     },
     "cloud_token_output": {
       "min_date": "2025-09-15",
-      "max_date": "2026-10-01",
-      "unique_dates": 38,
+      "max_date": "2026-10-28",
+      "unique_dates": 45,
       "label_zh": "雲端自日更起"
     },
     "local_gpu": {
       "min_date": "2025-09-15",
-      "max_date": "2026-10-01",
-      "unique_dates": 38,
+      "max_date": "2026-10-28",
+      "unique_dates": 65,
       "label_zh": "GPU Keepa 近似長曲線"
     },
     "mac": {
       "min_date": "2026-08-15",
-      "max_date": "2026-10-01",
-      "unique_dates": 16,
+      "max_date": "2026-10-28",
+      "unique_dates": 23,
       "label_zh": "Mac 歷史約一個月"
     },
     "power_kwh": {
       "min_date": "2025-09-15",
-      "max_date": "2026-10-01",
-      "unique_dates": 38,
+      "max_date": "2026-10-28",
+      "unique_dates": 45,
       "label_zh": "電價為規劃估算"
     }
   },
-  "plain_zh_detail": "Mac 2026-08-15→2026-10-01；GPU 2025-09-15→2026-10-01（含 Keepa 近似）；雲端牌價紀錄 2025-09-15→2026-10-01，真實日更自 2026-09-15 起累積"
+  "plain_zh_detail": "Mac 2026-08-15→2026-10-28；GPU 2025-09-15→2026-10-28（含 Keepa 近似）；雲端牌價紀錄 2025-09-15→2026-10-28，真實日更自 2026-09-15 起累積"
 }
