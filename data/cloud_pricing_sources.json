@@ -17,7 +17,9 @@
     "deepseek/deepseek-v4-pro-0813": "deepseek:v4-pro",
     "x-ai/grok-4.3": "xai:grok-4.3",
     "x-ai/grok-4.6": "xai:grok-4.6",
-    "openai/gpt-oss-120b": "groq:gpt-oss-120b"
+    "openai/gpt-oss-120b": "groq:gpt-oss-120b",
+    "openai/gpt-6.1-terra": "openai:gpt-6.1-terra",
+    "openai/gpt-6.1-sol": "openai:gpt-6.1-sol"
   },
   "discover": {
     "enabled": true,
