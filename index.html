@@ -7,7 +7,8 @@
     <script>
       (function () {
         try {
-          var t = localStorage.getItem('cq_theme')
+          var t = new URLSearchParams(window.location.search).get('theme')
+          if (t !== 'light' && t !== 'dark') t = localStorage.getItem('cq_theme')
           if (t !== 'light' && t !== 'dark') {
             t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
           }
@@ -58,7 +59,7 @@
       href="https://computequote.plaigroundlab.com/"
     />
     <title>ComputeQuote — 價格歷史 | Price History</title>
-    <script type="module" crossorigin src="/assets/index-BT-GjF4A.js"></script>
+    <script type="module" crossorigin src="/assets/index-O6RpPVC_.js"></script>
     <link rel="stylesheet" crossorigin href="/assets/index-D1u_47wv.css">
   </head>
   <body>
