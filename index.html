@@ -2,6 +2,21 @@
 <html lang="zh-Hant">
   <head>
     <meta charset="UTF-8" />
+    <!-- Theme pre-paint (2026-11-05): set data-theme before first paint so
+         dark-mode users never see a light flash. Mirrors lib/theme.ts. -->
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('cq_theme')
+          if (t !== 'light' && t !== 'dark') {
+            t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+          }
+          document.documentElement.dataset.theme = t
+        } catch (e) {
+          document.documentElement.dataset.theme = 'light'
+        }
+      })()
+    </script>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <!-- Static defaults are bilingual (zh | en); the app rewrites title,
@@ -43,8 +58,8 @@
       href="https://computequote.plaigroundlab.com/"
     />
     <title>ComputeQuote — 價格歷史 | Price History</title>
-    <script type="module" crossorigin src="/assets/index-BDJNET4i.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-CMeMUFW8.css">
+    <script type="module" crossorigin src="/assets/index-Cpbf7Vgg.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-CKPOwC4R.css">
   </head>
   <body>
     <div id="root"></div>
