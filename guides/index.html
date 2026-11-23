@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <script>
+      (function () {
+        try {
+          var t = new URLSearchParams(window.location.search).get('theme');
+          if (t !== 'light' && t !== 'dark') t = localStorage.getItem('cq_theme');
+          if (t !== 'light' && t !== 'dark') t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+          document.documentElement.dataset.theme = t;
+        } catch (e) { document.documentElement.dataset.theme = 'light'; }
+      })();
+    </script>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ComputeQuote — Local LLM GPU &amp; VRAM Buying Guides (2026)</title>
+    <meta name="description" content="Bilingual 2026 GPU buying &amp; VRAM sizing guides for RTX 5090, 5080, 4090, 3090, 5070 Ti, and Mac Studio Unified Memory vs. Cloud GPU rentals." />
+    <link rel="canonical" href="https://computequote.plaigroundlab.com/guides/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="ComputeQuote" />
+    <meta property="og:title" content="Local LLM GPU &amp; VRAM Buying Guides — ComputeQuote" />
+    <meta property="og:url" content="https://computequote.plaigroundlab.com/guides/" />
+    <meta property="og:image" content="https://computequote.plaigroundlab.com/og-card.png" />
+    <script type="application/ld+json">{"@context": "https://schema.org", "@type": "CollectionPage", "name": "ComputeQuote Local LLM GPU & VRAM Buying Guides", "url": "https://computequote.plaigroundlab.com/guides/", "publisher": {"@type": "Organization", "name": "PlAIground Lab", "url": "https://plaigroundlab.com"}}</script>
+    <style>
+      :root { --bg:#f6f8fc; --surface:#ffffff; --surface-2:#edf2f8; --border:#d5dfec; --text:#0f172a; --muted:#475569; --accent:#0284c7; --ok:#10b981; }
+      html[data-theme='dark'] { --bg:#0b1220; --surface:#131d30; --surface-2:#1c2a42; --border:#283855; --text:#f1f5f9; --muted:#94a3b8; --accent:#38bdf8; --ok:#34d399; }
+      *{box-sizing:border-box}
+      body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC",sans-serif;background:var(--bg);color:var(--text);line-height:1.65}
+      .topbar{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;padding:14px 24px;background:var(--surface);border-bottom:1px solid var(--border)}
+      .brand-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+      .brand{font-weight:800;font-size:18px;color:var(--text);text-decoration:none}
+      .nav-link{font-size:13.5px;color:var(--accent);text-decoration:none;font-weight:600}
+      .controls{display:flex;gap:8px;align-items:center}
+      .btn-chip{background:var(--surface-2);color:var(--text);border:1px solid var(--border);border-radius:8px;padding:6px 12px;font-size:13px;font-weight:600;cursor:pointer}
+      .btn-chip.active{background:var(--accent);color:#08101c;border-color:var(--accent)}
+      .wrap{max-width:980px;margin:0 auto;padding:28px 20px 56px}
+      .kicker{font-size:12px;font-weight:700;letter-spacing:.08em;color:var(--accent);margin:0 0 6px}
+      h1{font-size:clamp(22px,3.2vw,32px);margin:0 0 10px;line-height:1.25}
+      .lede{color:var(--muted);margin:0 0 22px;max-width:740px}
+      .specs-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:10px;margin-bottom:22px}
+      .spec-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
+      .spec-box span{display:block;font-size:12px;color:var(--muted)}
+      .spec-box strong{font-size:17px}
+      .card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px;margin-bottom:18px}
+      .card h2{margin:0 0 12px;font-size:18px}
+      .tbl-wrap{overflow-x:auto}
+      table{width:100%;border-collapse:collapse;font-size:14px}
+      th,td{padding:10px;border-bottom:1px solid var(--border);text-align:left}
+      th{color:var(--muted);font-size:12.5px}
+      .cta-box{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;background:var(--surface-2);border:1px solid var(--border);border-radius:12px;padding:16px 20px;margin:20px 0}
+      .btn-cta{display:inline-block;background:var(--accent);color:#08101c;font-weight:700;padding:10px 16px;border-radius:9px;text-decoration:none;font-size:14px}
+      .btn-sec{display:inline-block;background:var(--surface);color:var(--text);border:1px solid var(--border);font-weight:600;padding:9px 14px;border-radius:9px;text-decoration:none;font-size:14px}
+      .guide-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(275px,1fr));gap:16px}
+      .guide-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px;display:flex;flex-direction:column;justify-content:space-between;gap:10px}
+      .guide-card h3{margin:0;font-size:18px}
+      .pill{display:inline-block;padding:3px 9px;border-radius:999px;font-size:12px;font-weight:700;background:rgba(16,185,129,.14);color:var(--ok)}
+      details{border-top:1px solid var(--border);padding:10px 0}
+      details:first-of-type{border-top:0}
+      summary{font-weight:700;cursor:pointer}
+      .footer{margin-top:36px;padding-top:18px;border-top:1px solid var(--border);font-size:13px;color:var(--muted);display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between}
+      .footer a{color:var(--accent);text-decoration:none;font-weight:600}
+      [data-lang-block='en']{display:none}
+      html[lang='en'] [data-lang-block='zh-Hant']{display:none}
+      html[lang='en'] [data-lang-block='en']{display:block}
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand-row">
+        <a class="brand" href="/?utm_source=computequote&utm_medium=guide">ComputeQuote</a>
+        <a class="nav-link" href="/?utm_source=computequote&utm_medium=guide">街價追蹤表</a>
+        <a class="nav-link" href="/calculator/?utm_source=computequote&utm_medium=guide">買機 vs 租雲端試算</a>
+      </div>
+      <div class="controls">
+        <button type="button" class="btn-chip" id="theme-btn">Theme</button>
+        <button type="button" class="btn-chip active" data-lang="zh-Hant">中文</button>
+        <button type="button" class="btn-chip" data-lang="en">EN</button>
+      </div>
+    </header>
+    <main class="wrap">
+      <div data-lang-block="zh-Hant">
+        <p class="kicker">COMPUTEQUOTE · 本地大模型與 AI 算力百科</p>
+        <h1>Local LLM GPU 選卡與 VRAM 採購指南（2026 實測版）</h1>
+        <p class="lede">買 AI 顯卡最常踩的坑是看錯核心算力、卻被 16 GB VRAM 卡死在門外。這系列針對 RTX 5090、5080、4090、3090、5070 Ti 與 Mac Studio 拆解真實可跑模型上限，再直接帶入雲端時租對比回本門檻。</p>
+        <section class="card">
+          <h2>六大算力層級速查表</h2>
+          <div class="tbl-wrap"><table><thead><tr><th>型號</th><th>VRAM 容量</th><th>記憶體頻寬</th><th>整卡功耗</th><th>雲端同級參考時租</th></tr></thead><tbody><tr><td><a class='nav-link' href='/guides/rtx-5090/'>RTX 5090 32GB</a></td><td>32 GB GDDR7</td><td>1,792 GB/s</td><td>575 W</td><td>$0.69–$1.10/hr</td></tr><tr><td><a class='nav-link' href='/guides/rtx-5080/'>RTX 5080 16GB</a></td><td>16 GB GDDR7</td><td>960 GB/s</td><td>360 W</td><td>$0.30–$0.49/hr</td></tr><tr><td><a class='nav-link' href='/guides/rtx-4090/'>RTX 4090 24GB</a></td><td>24 GB GDDR6X</td><td>1,008 GB/s</td><td>450 W</td><td>$0.39–$0.69/hr</td></tr><tr><td><a class='nav-link' href='/guides/rtx-3090/'>RTX 3090 24GB (Used / Dual)</a></td><td>24 GB GDDR6X (×2 = 48 GB)</td><td>936 GB/s</td><td>350 W (×2 = 700 W)</td><td>$0.25–$0.44/hr</td></tr><tr><td><a class='nav-link' href='/guides/rtx-5070-ti/'>RTX 5070 Ti 16GB</a></td><td>16 GB GDDR7</td><td>896 GB/s</td><td>300 W</td><td>$0.22–$0.35/hr</td></tr><tr><td><a class='nav-link' href='/guides/mac-studio-unified-memory/'>Mac Studio / Apple Silicon (Unified Memory 96–192GB)</a></td><td>96–512 GB Unified</td><td>546–819 GB/s (Ultra)</td><td>120–270 W (Full Rig)</td><td>$1.40–$2.80/hr (H100 / A100 equiv capacity)</td></tr></tbody></table></div>
+        </section>
+        <div class="guide-grid">        <article class="guide-card">
+          <div>
+            <span class="pill">32 GB GDDR7</span>
+            <h3>RTX 5090 32GB</h3>
+            <p class="lede" style="margin:6px 0 0">32B–70B Q4 單卡免切分推論、FLUX/SDXL/Wan I2V 本地重度生成與 LoRA 微調</p>
+          </div>
+          <div style="font-size:13px;color:var(--muted)">參考 MSRP：$1,999 · 雲端時租參考：$0.69–$1.10/hr</div>
+          <a class="btn-sec" href="/guides/rtx-5090/">看實測容量與買 vs 租建議 →</a>
+        </article>        <article class="guide-card">
+          <div>
+            <span class="pill">16 GB GDDR7</span>
+            <h3>RTX 5080 16GB</h3>
+            <p class="lede" style="margin:6px 0 0">14B Q4–Q6 快速編碼輔助、1080p/4K 輕量生圖、遊戲＋AI 混合日用機</p>
+          </div>
+          <div style="font-size:13px;color:var(--muted)">參考 MSRP：$999 · 雲端時租參考：$0.30–$0.49/hr</div>
+          <a class="btn-sec" href="/guides/rtx-5080/">看實測容量與買 vs 租建議 →</a>
+        </article>        <article class="guide-card">
+          <div>
+            <span class="pill">24 GB GDDR6X</span>
+            <h3>RTX 4090 24GB</h3>
+            <p class="lede" style="margin:6px 0 0">32B Q4 最佳甜點卡、高吞吐生圖／影片原型、全能本地 AI 工作站基準</p>
+          </div>
+          <div style="font-size:13px;color:var(--muted)">參考 MSRP：$1,599 · 雲端時租參考：$0.39–$0.69/hr</div>
+          <a class="btn-sec" href="/guides/rtx-4090/">看實測容量與買 vs 租建議 →</a>
+        </article>        <article class="guide-card">
+          <div>
+            <span class="pill">24 GB GDDR6X (×2 = 48 GB)</span>
+            <h3>RTX 3090 24GB (Used / Dual)</h3>
+            <p class="lede" style="margin:6px 0 0">預算極限「每美元最多 VRAM」王者；雙卡 48 GB 直接低成本運行 70B Q4</p>
+          </div>
+          <div style="font-size:13px;color:var(--muted)">參考 MSRP：$1,499 (Used ~$700–$850) · 雲端時租參考：$0.25–$0.44/hr</div>
+          <a class="btn-sec" href="/guides/rtx-3090/">看實測容量與買 vs 租建議 →</a>
+        </article>        <article class="guide-card">
+          <div>
+            <span class="pill">16 GB GDDR7</span>
+            <h3>RTX 5070 Ti 16GB</h3>
+            <p class="lede" style="margin:6px 0 0">入門 16 GB GDDR7 高CP值首選：7B–14B 本地助理＋低電費待機表現</p>
+          </div>
+          <div style="font-size:13px;color:var(--muted)">參考 MSRP：$749 · 雲端時租參考：$0.22–$0.35/hr</div>
+          <a class="btn-sec" href="/guides/rtx-5070-ti/">看實測容量與買 vs 租建議 →</a>
+        </article>        <article class="guide-card">
+          <div>
+            <span class="pill">96–512 GB Unified</span>
+            <h3>Mac Studio / Apple Silicon (Unified Memory 96–192GB)</h3>
+            <p class="lede" style="margin:6px 0 0">極低待機功耗＋安靜桌面跑 70B–400B+ 超大模型推理（個人長對話／私密分析）</p>
+          </div>
+          <div style="font-size:13px;color:var(--muted)">參考 MSRP：$3,999–$9,499+ · 雲端時租參考：$1.40–$2.80/hr (H100 / A100 equiv capacity)</div>
+          <a class="btn-sec" href="/guides/mac-studio-unified-memory/">看實測容量與買 vs 租建議 →</a>
+        </article></div>
+        <div class="cta-box">
+          <div><strong>不確定該組桌機還是直接按小時租 RunPod / Vast.ai？</strong><div style="font-size:13.5px;color:var(--muted)">輸入你的組機預算、每週使用時數與電價，一秒算出回本週數。</div></div>
+          <a class="btn-cta" href="/calculator/?utm_source=computequote&utm_medium=guide">打開 GPU 回本計算機 →</a>
+        </div>
+      </div>
+      <div data-lang-block="en">
+        <p class="kicker">COMPUTEQUOTE · LOCAL LLM HARDWARE ENCYCLOPEDIA</p>
+        <h1>Local LLM GPU &amp; VRAM Buying Guides (2026 Field Reference)</h1>
+        <p class="lede">The #1 mistake in local AI hardware is chasing TFLOPS while hitting a hard VRAM wall. Compare real quantized LLM capacity, bandwidth, power draw, and cloud break-even thresholds across 6 hardware tiers.</p>
+        <section class="card">
+          <h2>Hardware Tier Comparison Matrix</h2>
+          <div class="tbl-wrap"><table><thead><tr><th>Hardware</th><th>VRAM Tier</th><th>Bandwidth</th><th>TDP</th><th>Cloud Hourly Ref</th></tr></thead><tbody><tr><td><a class='nav-link' href='/guides/rtx-5090/'>RTX 5090 32GB</a></td><td>32 GB GDDR7</td><td>1,792 GB/s</td><td>575 W</td><td>$0.69–$1.10/hr</td></tr><tr><td><a class='nav-link' href='/guides/rtx-5080/'>RTX 5080 16GB</a></td><td>16 GB GDDR7</td><td>960 GB/s</td><td>360 W</td><td>$0.30–$0.49/hr</td></tr><tr><td><a class='nav-link' href='/guides/rtx-4090/'>RTX 4090 24GB</a></td><td>24 GB GDDR6X</td><td>1,008 GB/s</td><td>450 W</td><td>$0.39–$0.69/hr</td></tr><tr><td><a class='nav-link' href='/guides/rtx-3090/'>RTX 3090 24GB (Used / Dual)</a></td><td>24 GB GDDR6X (×2 = 48 GB)</td><td>936 GB/s</td><td>350 W (×2 = 700 W)</td><td>$0.25–$0.44/hr</td></tr><tr><td><a class='nav-link' href='/guides/rtx-5070-ti/'>RTX 5070 Ti 16GB</a></td><td>16 GB GDDR7</td><td>896 GB/s</td><td>300 W</td><td>$0.22–$0.35/hr</td></tr><tr><td><a class='nav-link' href='/guides/mac-studio-unified-memory/'>Mac Studio / Apple Silicon (Unified Memory 96–192GB)</a></td><td>96–512 GB Unified</td><td>546–819 GB/s (Ultra)</td><td>120–270 W (Full Rig)</td><td>$1.40–$2.80/hr (H100 / A100 equiv capacity)</td></tr></tbody></table></div>
+        </section>
+        <div class="guide-grid">        <article class="guide-card">
+          <div>
+            <span class="pill">32 GB GDDR7</span>
+            <h3>RTX 5090 32GB</h3>
+            <p class="lede" style="margin:6px 0 0">32B–70B Q4 single-card inference, heavy image/I2V generation &amp; LoRA fine-tuning</p>
+          </div>
+          <div style="font-size:13px;color:var(--muted)">MSRP: $1,999 · Cloud Ref: $0.69–$1.10/hr</div>
+          <a class="btn-sec" href="/guides/rtx-5090/">Read VRAM Tier & Buy-vs-Rent Guide →</a>
+        </article>        <article class="guide-card">
+          <div>
+            <span class="pill">16 GB GDDR7</span>
+            <h3>RTX 5080 16GB</h3>
+            <p class="lede" style="margin:6px 0 0">Fast 14B code assistants, responsive diffusion generation &amp; dual gaming + AI rigs</p>
+          </div>
+          <div style="font-size:13px;color:var(--muted)">MSRP: $999 · Cloud Ref: $0.30–$0.49/hr</div>
+          <a class="btn-sec" href="/guides/rtx-5080/">Read VRAM Tier & Buy-vs-Rent Guide →</a>
+        </article>        <article class="guide-card">
+          <div>
+            <span class="pill">24 GB GDDR6X</span>
+            <h3>RTX 4090 24GB</h3>
+            <p class="lede" style="margin:6px 0 0">The 32B Q4 sweet-spot workstation card with proven PyTorch/vLLM ecosystem support</p>
+          </div>
+          <div style="font-size:13px;color:var(--muted)">MSRP: $1,599 · Cloud Ref: $0.39–$0.69/hr</div>
+          <a class="btn-sec" href="/guides/rtx-4090/">Read VRAM Tier & Buy-vs-Rent Guide →</a>
+        </article>        <article class="guide-card">
+          <div>
+            <span class="pill">24 GB GDDR6X (×2 = 48 GB)</span>
+            <h3>RTX 3090 24GB (Used / Dual)</h3>
+            <p class="lede" style="margin:6px 0 0">Unbeatable VRAM-per-dollar champion; Dual 3090 (48 GB) unlocks 70B Q4 locally</p>
+          </div>
+          <div style="font-size:13px;color:var(--muted)">MSRP: $1,499 (Used ~$700–$850) · Cloud Ref: $0.25–$0.44/hr</div>
+          <a class="btn-sec" href="/guides/rtx-3090/">Read VRAM Tier & Buy-vs-Rent Guide →</a>
+        </article>        <article class="guide-card">
+          <div>
+            <span class="pill">16 GB GDDR7</span>
+            <h3>RTX 5070 Ti 16GB</h3>
+            <p class="lede" style="margin:6px 0 0">High-value 16 GB GDDR7 entry point: snappy 7B–14B models &amp; 300W efficiency</p>
+          </div>
+          <div style="font-size:13px;color:var(--muted)">MSRP: $749 · Cloud Ref: $0.22–$0.35/hr</div>
+          <a class="btn-sec" href="/guides/rtx-5070-ti/">Read VRAM Tier & Buy-vs-Rent Guide →</a>
+        </article>        <article class="guide-card">
+          <div>
+            <span class="pill">96–512 GB Unified</span>
+            <h3>Mac Studio / Apple Silicon (Unified Memory 96–192GB)</h3>
+            <p class="lede" style="margin:6px 0 0">Whisper-quiet, low-wattage desktop inference for 70B–400B+ open-weight LLMs</p>
+          </div>
+          <div style="font-size:13px;color:var(--muted)">MSRP: $3,999–$9,499+ · Cloud Ref: $1.40–$2.80/hr (H100 / A100 equiv capacity)</div>
+          <a class="btn-sec" href="/guides/mac-studio-unified-memory/">Read VRAM Tier & Buy-vs-Rent Guide →</a>
+        </article></div>
+        <div class="cta-box">
+          <div><strong>Should you build locally or rent cloud GPUs by the hour?</strong><div style="font-size:13.5px;color:var(--muted)">Plug your rig budget, weekly active hours, and electricity rate into the interactive calculator.</div></div>
+          <a class="btn-cta" href="/calculator/?utm_source=computequote&utm_medium=guide">Open GPU Payback Calculator →</a>
+        </div>
+      </div>
+      <footer class="footer">
+        <span><a href="/?utm_source=computequote&utm_medium=guide">ComputeQuote Live Prices →</a> · <a href="https://blog.plaigroundlab.com/?utm_source=computequote&utm_medium=guide">AI Geek Blog</a></span>
+        <span><a href="https://plaigroundlab.com/?utm_source=computequote&utm_medium=guide" target="_blank" rel="noopener">PlAIground Lab</a></span>
+      </footer>
+    </main>
+    <script>
+      (function () {
+        function setLang(lang) {
+          var l = lang === 'en' ? 'en' : 'zh-Hant';
+          document.documentElement.lang = l;
+          document.querySelectorAll('[data-lang]').forEach(function (b) { b.classList.toggle('active', b.dataset.lang === l); });
+        }
+        document.querySelectorAll('[data-lang]').forEach(function (b) { b.addEventListener('click', function () { setLang(b.dataset.lang); }); });
+        var tb = document.getElementById('theme-btn');
+        if (tb) tb.addEventListener('click', function () {
+          var next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+          document.documentElement.dataset.theme = next;
+          try { localStorage.setItem('cq_theme', next); } catch (e) {}
+        });
+        setLang('zh-Hant');
+      })();
+    </script>
+  </body>
+</html>
