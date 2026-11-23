@@ -1,0 +1,445 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <script>
+      (function () {
+        try {
+          var t = new URLSearchParams(window.location.search).get('theme');
+          if (t !== 'light' && t !== 'dark') t = localStorage.getItem('cq_theme');
+          if (t !== 'light' && t !== 'dark') {
+            t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+          }
+          document.documentElement.dataset.theme = t;
+        } catch (e) {
+          document.documentElement.dataset.theme = 'light';
+        }
+      })();
+    </script>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ComputeQuote — GPU Cloud vs. Local Break-Even Calculator</title>
+    <meta
+      name="description"
+      content="Compare local RTX 5090 / 4090 / 3090 AI workstation ownership cost vs. cloud GPU hourly rentals and calculate exact break-even months."
+    />
+    <link rel="canonical" href="https://computequote.plaigroundlab.com/calculator/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="ComputeQuote" />
+    <meta property="og:title" content="ComputeQuote — Local GPU vs. Cloud Payback Calculator" />
+    <meta
+      property="og:description"
+      content="Calculate when buying a local RTX 5090 / 4090 / 3090 rig beats cloud GPU rental."
+    />
+    <meta property="og:url" content="https://computequote.plaigroundlab.com/calculator/" />
+    <meta property="og:image" content="https://computequote.plaigroundlab.com/og-card.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="ComputeQuote — Local GPU vs. Cloud Payback Calculator" />
+    <meta name="twitter:image" content="https://computequote.plaigroundlab.com/og-card.png" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "ComputeQuote GPU Payback Calculator",
+        "url": "https://computequote.plaigroundlab.com/calculator/",
+        "applicationCategory": "FinanceApplication",
+        "operatingSystem": "Web",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "PlAIground Lab",
+          "url": "https://plaigroundlab.com"
+        }
+      }
+    </script>
+    <style>
+      :root {
+        --bg: #f6f8fc;
+        --surface: #ffffff;
+        --surface-2: #edf2f8;
+        --border: #d5dfec;
+        --text: #0f172a;
+        --muted: #475569;
+        --accent: #0284c7;
+        --local-bar: #10b981;
+        --cloud-bar: #0ea5e9;
+        --warn: #d97706;
+      }
+      html[data-theme='dark'] {
+        --bg: #0b1220;
+        --surface: #131d30;
+        --surface-2: #1c2a42;
+        --border: #283855;
+        --text: #f1f5f9;
+        --muted: #94a3b8;
+        --accent: #38bdf8;
+        --local-bar: #34d399;
+        --cloud-bar: #38bdf8;
+        --warn: #fbbf24;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.55;
+      }
+      .topbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 12px;
+        padding: 14px 24px;
+        background: var(--surface);
+        border-bottom: 1px solid var(--border);
+      }
+      .brand-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+      .brand { font-weight: 800; font-size: 18px; color: var(--text); text-decoration: none; }
+      .nav-back { font-size: 13.5px; color: var(--accent); text-decoration: none; font-weight: 600; }
+      .controls { display: flex; gap: 8px; align-items: center; }
+      .btn-chip {
+        background: var(--surface-2);
+        color: var(--text);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 6px 12px;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+      }
+      .btn-chip.active { background: var(--accent); color: #08101c; border-color: var(--accent); }
+      .wrap { max-width: 1020px; margin: 0 auto; padding: 28px 20px 56px; }
+      .kicker { font-size: 12px; font-weight: 700; letter-spacing: 0.08em; color: var(--accent); margin: 0 0 6px; }
+      h1 { font-size: clamp(22px, 3vw, 32px); margin: 0 0 8px; }
+      .lede { color: var(--muted); margin: 0 0 20px; max-width: 720px; }
+      .presets { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 18px; }
+      .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px; }
+      .card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 20px;
+      }
+      .card h2 { margin: 0 0 14px; font-size: 17px; }
+      .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; }
+      label.field { display: flex; flex-direction: column; gap: 6px; font-size: 13px; color: var(--muted); }
+      input[type='number'] {
+        background: var(--surface-2);
+        color: var(--text);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 9px 10px;
+        font-size: 15px;
+      }
+      .verdict-pill {
+        display: inline-block;
+        padding: 5px 12px;
+        border-radius: 999px;
+        font-size: 13px;
+        font-weight: 700;
+        background: rgba(16, 185, 129, 0.14);
+        color: var(--local-bar);
+        margin-bottom: 14px;
+      }
+      .verdict-pill.is-cloud { background: rgba(14, 165, 233, 0.15); color: var(--cloud-bar); }
+      .metrics { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 18px; }
+      .metric {
+        background: var(--surface-2);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 12px;
+      }
+      .metric span { display: block; font-size: 12px; color: var(--muted); }
+      .metric strong { font-size: 21px; }
+      .bar-block { margin-bottom: 12px; }
+      .bar-head { display: flex; justify-content: space-between; font-size: 13px; font-weight: 600; margin-bottom: 5px; }
+      .bar-track { height: 14px; background: var(--surface-2); border-radius: 999px; overflow: hidden; }
+      .bar-fill { height: 100%; border-radius: 999px; transition: width 0.25s ease; }
+      .bar-local { background: var(--local-bar); }
+      .bar-cloud { background: var(--cloud-bar); }
+      .footer {
+        margin-top: 36px;
+        padding-top: 18px;
+        border-top: 1px solid var(--border);
+        font-size: 13px;
+        color: var(--muted);
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+        justify-content: space-between;
+      }
+      .footer a { color: var(--accent); text-decoration: none; font-weight: 600; }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand-row">
+        <a class="brand" href="https://computequote.plaigroundlab.com/">ComputeQuote</a>
+        <a class="nav-back" href="https://computequote.plaigroundlab.com/" data-i18n="backMain">← Price History Index</a>
+      </div>
+      <div class="controls">
+        <button type="button" class="btn-chip" id="theme-btn" data-i18n="themeToggle">Theme</button>
+        <button type="button" class="btn-chip active" data-lang="zh-Hant">中文</button>
+        <button type="button" class="btn-chip" data-lang="en">EN</button>
+      </div>
+    </header>
+
+    <main class="wrap">
+      <p class="kicker" data-i18n="kicker">COMPUTEQUOTE · ROI & PAYBACK CALCULATOR</p>
+      <h1 data-i18n="headline">Local GPU Build vs. Cloud Rental Payback Calculator</h1>
+      <p class="lede" data-i18n="lede">Compare upfront local workstation cost + power against hourly cloud GPU rental and see the exact break-even week.</p>
+
+      <div class="presets" id="preset-row" aria-label="GPU Presets">
+        <button type="button" class="btn-chip active" data-preset="rtx5090">RTX 5090 32GB</button>
+        <button type="button" class="btn-chip" data-preset="rtx4090">RTX 4090 24GB</button>
+        <button type="button" class="btn-chip" data-preset="rtx3090">RTX 3090 24GB (Used)</button>
+        <button type="button" class="btn-chip" data-preset="dual3090">Dual RTX 3090 48GB</button>
+      </div>
+
+      <div class="grid-2">
+        <section class="card">
+          <h2 data-i18n="inputsTitle">Hardware & Usage Assumptions</h2>
+          <div class="form-grid">
+            <label class="field">
+              <span data-i18n="lblBuildCost">Local Rig Total Cost (USD)</span>
+              <input id="inp-build" type="number" min="100" step="50" value="3600" />
+            </label>
+            <label class="field">
+              <span data-i18n="lblCloudRate">Cloud GPU Rate ($/hr)</span>
+              <input id="inp-cloud" type="number" min="0.05" step="0.05" value="0.95" />
+            </label>
+            <label class="field">
+              <span data-i18n="lblHoursWeek">Active GPU Hours / Week</span>
+              <input id="inp-hours" type="number" min="1" max="168" step="1" value="35" />
+            </label>
+            <label class="field">
+              <span data-i18n="lblWatts">System Power Draw (Watts)</span>
+              <input id="inp-watts" type="number" min="50" step="25" value="650" />
+            </label>
+            <label class="field">
+              <span data-i18n="lblPowerRate">Electricity Rate ($/kWh)</span>
+              <input id="inp-kwh" type="number" min="0" step="0.01" value="0.14" />
+            </label>
+          </div>
+        </section>
+
+        <section class="card">
+          <h2 data-i18n="resultsTitle">12-Month Cost & Break-Even</h2>
+          <div id="verdict-pill" class="verdict-pill">-</div>
+
+          <div class="metrics">
+            <div class="metric">
+              <span data-i18n="lblBreakEven">Break-Even Point</span>
+              <strong id="out-breakeven">-</strong>
+            </div>
+            <div class="metric">
+              <span data-i18n="lblMonthlySave">Net Monthly Advantage After Payback</span>
+              <strong id="out-monthly-save">-</strong>
+            </div>
+            <div class="metric">
+              <span data-i18n="lblPowerYear">Annual Power Cost</span>
+              <strong id="out-power-yr">$0</strong>
+            </div>
+            <div class="metric">
+              <span data-i18n="lblCloudMonth">Cloud Monthly Spend</span>
+              <strong id="out-cloud-mo">$0</strong>
+            </div>
+          </div>
+
+          <div class="bar-block">
+            <div class="bar-head">
+              <span data-i18n="lblLocal12m">Local 12-Month Total (Rig + Power)</span>
+              <strong id="out-local-12m">$0</strong>
+            </div>
+            <div class="bar-track"><div id="bar-local" class="bar-fill bar-local" style="width: 50%"></div></div>
+          </div>
+
+          <div class="bar-block">
+            <div class="bar-head">
+              <span data-i18n="lblCloud12m">Cloud 12-Month Total</span>
+              <strong id="out-cloud-12m">$0</strong>
+            </div>
+            <div class="bar-track"><div id="bar-cloud" class="bar-fill bar-cloud" style="width: 50%"></div></div>
+          </div>
+        </section>
+      </div>
+
+      <footer class="footer">
+        <span><a href="https://computequote.plaigroundlab.com/" data-i18n="footerIndex">Browse Live GPU Street Prices on ComputeQuote →</a></span>
+        <span><a href="https://plaigroundlab.com" target="_blank" rel="noopener">PlAIground Lab</a></span>
+      </footer>
+    </main>
+
+    <script>
+      (function () {
+        var PRESETS = {
+          rtx5090: { build: 3600, cloud: 0.95, hours: 35, watts: 650, kwh: 0.14 },
+          rtx4090: { build: 2500, cloud: 0.69, hours: 35, watts: 520, kwh: 0.14 },
+          rtx3090: { build: 1450, cloud: 0.44, hours: 35, watts: 480, kwh: 0.14 },
+          dual3090: { build: 2350, cloud: 0.89, hours: 40, watts: 820, kwh: 0.14 },
+        };
+        var I18N = {
+          'zh-Hant': {
+            backMain: '← 回 ComputeQuote 價格歷史主站',
+            themeToggle: '切換深淺色',
+            kicker: 'COMPUTEQUOTE · 算力回本試算器',
+            headline: '自組 AI 主機 vs. 雲端租 GPU 回本計算機',
+            lede: '輸入你的預估每週開機時數、本地組機預算、電費與雲端時租單價，立即算出第幾週買本機開始倒賺。',
+            inputsTitle: '硬體與使用強度參數',
+            lblBuildCost: '本地組機總價 (USD)',
+            lblCloudRate: '雲端 GPU 費率 ($/小時)',
+            lblHoursWeek: '每週實跑時數',
+            lblWatts: '整機滿載功耗 (瓦)',
+            lblPowerRate: '當地電價 ($/度 kWh)',
+            resultsTitle: '12 個月總成本與回本試算',
+            lblBreakEven: '預估回本時間',
+            lblMonthlySave: '回本後每月淨省',
+            lblPowerYear: '全年電費預估',
+            lblCloudMonth: '雲端每月花費',
+            lblLocal12m: '本地 12 個月總成本（含硬體＋電費）',
+            lblCloud12m: '雲端 12 個月總租費',
+            footerIndex: '查看最新三地 GPU 街價與歷史走勢 →',
+            verdictLocal: '本機在 {months} 個月回本（約 {weeks} 週），一年內划算！',
+            verdictLong: '約 {months} 個月回本；目前使用時數較低，短租雲端更有彈性',
+            verdictCloud: '雲端時租低於本機電費，建議繼續租雲端免買機',
+            monthsFmt: '{m} 個月 ({w} 週)',
+            noBreakeven: '無法回本（租雲端較省）',
+          },
+          en: {
+            backMain: '← Price History Index',
+            themeToggle: 'Theme',
+            kicker: 'COMPUTEQUOTE · ROI & PAYBACK CALCULATOR',
+            headline: 'Local GPU Build vs. Cloud Rental Payback Calculator',
+            lede: 'Compare upfront local workstation cost + power against hourly cloud GPU rental and see the exact break-even week.',
+            inputsTitle: 'Hardware & Usage Assumptions',
+            lblBuildCost: 'Local Rig Total Cost (USD)',
+            lblCloudRate: 'Cloud GPU Rate ($/hr)',
+            lblHoursWeek: 'Active GPU Hours / Week',
+            lblWatts: 'System Power Draw (Watts)',
+            lblPowerRate: 'Electricity Rate ($/kWh)',
+            resultsTitle: '12-Month Cost & Break-Even',
+            lblBreakEven: 'Break-Even Point',
+            lblMonthlySave: 'Net Monthly Advantage After Payback',
+            lblPowerYear: 'Annual Power Cost',
+            lblCloudMonth: 'Cloud Monthly Spend',
+            lblLocal12m: 'Local 12-Month Total (Rig + Power)',
+            lblCloud12m: 'Cloud 12-Month Total',
+            footerIndex: 'Browse Live GPU Street Prices on ComputeQuote →',
+            verdictLocal: 'Breaks even in {months} months ({weeks} wks) — Local rig wins within 1 year!',
+            verdictLong: 'Breaks even in {months} months — Cloud stays more flexible at low utilization',
+            verdictCloud: 'Cloud rate is cheaper than local power — Keep renting Cloud GPUs',
+            monthsFmt: '{m} mo ({w} wks)',
+            noBreakeven: 'No payback (Cloud cheaper)',
+          },
+        };
+
+        var curLang = 'zh-Hant';
+        function money(v) {
+          return '$' + Math.round(v).toLocaleString('en-US');
+        }
+        function applyLang(lang) {
+          curLang = I18N[lang] ? lang : 'zh-Hant';
+          document.documentElement.lang = curLang;
+          var d = I18N[curLang];
+          document.querySelectorAll('[data-lang]').forEach(function (b) {
+            b.classList.toggle('active', b.dataset.lang === curLang);
+          });
+          document.querySelectorAll('[data-i18n]').forEach(function (el) {
+            var k = el.getAttribute('data-i18n');
+            if (d[k]) el.textContent = d[k];
+          });
+          compute();
+        }
+        function compute() {
+          var d = I18N[curLang];
+          var build = Math.max(0, Number(document.getElementById('inp-build').value) || 0);
+          var cloudHr = Math.max(0.01, Number(document.getElementById('inp-cloud').value) || 0.01);
+          var hrsWk = Math.max(1, Number(document.getElementById('inp-hours').value) || 1);
+          var watts = Math.max(0, Number(document.getElementById('inp-watts').value) || 0);
+          var kwh = Math.max(0, Number(document.getElementById('inp-kwh').value) || 0);
+
+          var powerHr = (watts / 1000) * kwh;
+          var netSaveHr = cloudHr - powerHr;
+          var hrsMonth = (hrsWk * 52) / 12;
+          var hrsYear = hrsWk * 52;
+          var powerYr = powerHr * hrsYear;
+          var local12m = build + powerYr;
+          var cloud12m = cloudHr * hrsYear;
+
+          document.getElementById('out-power-yr').textContent = money(powerYr);
+          document.getElementById('out-cloud-mo').textContent = money(cloudHr * hrsMonth);
+          document.getElementById('out-local-12m').textContent = money(local12m);
+          document.getElementById('out-cloud-12m').textContent = money(cloud12m);
+
+          var maxBar = Math.max(1, local12m, cloud12m);
+          document.getElementById('bar-local').style.width = Math.round((local12m / maxBar) * 100) + '%';
+          document.getElementById('bar-cloud').style.width = Math.round((cloud12m / maxBar) * 100) + '%';
+
+          var pill = document.getElementById('verdict-pill');
+          if (netSaveHr <= 0) {
+            document.getElementById('out-breakeven').textContent = d.noBreakeven;
+            document.getElementById('out-monthly-save').textContent = '$0';
+            pill.textContent = d.verdictCloud;
+            pill.classList.add('is-cloud');
+          } else {
+            var beHours = build / netSaveHr;
+            var beWeeks = beHours / hrsWk;
+            var beMonths = (beWeeks / 52) * 12;
+            var beMoStr = beMonths.toFixed(1);
+            var beWkStr = Math.ceil(beWeeks);
+            document.getElementById('out-breakeven').textContent = d.monthsFmt
+              .replace('{m}', beMoStr)
+              .replace('{w}', String(beWkStr));
+            document.getElementById('out-monthly-save').textContent = money(netSaveHr * hrsMonth) + '/mo';
+            if (beMonths <= 12) {
+              pill.textContent = d.verdictLocal
+                .replace('{months}', beMoStr)
+                .replace('{weeks}', String(beWkStr));
+              pill.classList.remove('is-cloud');
+            } else {
+              pill.textContent = d.verdictLong.replace('{months}', beMoStr);
+              pill.classList.add('is-cloud');
+            }
+          }
+        }
+
+        document.querySelectorAll('[data-preset]').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            document.querySelectorAll('[data-preset]').forEach(function (x) { x.classList.remove('active'); });
+            btn.classList.add('active');
+            var p = PRESETS[btn.dataset.preset];
+            if (!p) return;
+            document.getElementById('inp-build').value = p.build;
+            document.getElementById('inp-cloud').value = p.cloud;
+            document.getElementById('inp-hours').value = p.hours;
+            document.getElementById('inp-watts').value = p.watts;
+            document.getElementById('inp-kwh').value = p.kwh;
+            compute();
+          });
+        });
+
+        ['inp-build', 'inp-cloud', 'inp-hours', 'inp-watts', 'inp-kwh'].forEach(function (id) {
+          document.getElementById(id).addEventListener('input', compute);
+        });
+        document.querySelectorAll('[data-lang]').forEach(function (b) {
+          b.addEventListener('click', function () { applyLang(b.dataset.lang); });
+        });
+        document.getElementById('theme-btn').addEventListener('click', function () {
+          var next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+          document.documentElement.dataset.theme = next;
+          try { localStorage.setItem('cq_theme', next); } catch (e) {}
+        });
+
+        applyLang('zh-Hant');
+      })();
+    </script>
+  </body>
+</html>
